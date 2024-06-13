@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Enum\BookStatus;
 use App\Repository\BookRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -32,7 +33,7 @@ class Book
     private ?int $pageNumber = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $status = null;
+    private ?BookStatus $status = null;
 
     #[ORM\Column]
     private ?\DateTimeImmutable $editedAt = null;
@@ -124,12 +125,12 @@ class Book
         return $this;
     }
 
-    public function getStatus(): ?string
+    public function getStatus(): ?BookStatus
     {
         return $this->status;
     }
 
-    public function setStatus(string $status): static
+    public function setStatus(BookStatus $status): static
     {
         $this->status = $status;
 
