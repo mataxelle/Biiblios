@@ -12,7 +12,7 @@ use Symfony\Component\Routing\Attribute\Route;
 #[Route('/admin/editor')]
 class EditorController extends AbstractController
 {
-    #[Route('', name: 'app_admin_editor', methods: ['GET'])]
+    #[Route('', name: 'app_admin_editor_index', methods: ['GET'])]
     public function index(): Response
     {
         return $this->render('admin/editor/index.html.twig', [
