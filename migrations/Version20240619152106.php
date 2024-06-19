@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20240615123600 extends AbstractMigration
+final class Version20240619152106 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -24,15 +24,15 @@ final class Version20240615123600 extends AbstractMigration
         $this->addSql('CREATE SEQUENCE book_id_seq INCREMENT BY 1 MINVALUE 1 START 1');
         $this->addSql('CREATE SEQUENCE comment_id_seq INCREMENT BY 1 MINVALUE 1 START 1');
         $this->addSql('CREATE SEQUENCE editor_id_seq INCREMENT BY 1 MINVALUE 1 START 1');
-        $this->addSql('CREATE TABLE author (id INT NOT NULL, name VARCHAR(255) NOT NULL, nationality VARCHAR(255) DEFAULT NULL, date_of_birth TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, date_of_death TIMESTAMP(0) WITHOUT TIME ZONE DEFAULT NULL, PRIMARY KEY(id))');
-        $this->addSql('COMMENT ON COLUMN author.date_of_birth IS \'(DC2Type:datetime_immutable)\'');
-        $this->addSql('COMMENT ON COLUMN author.date_of_death IS \'(DC2Type:datetime_immutable)\'');
+        $this->addSql('CREATE TABLE author (id INT NOT NULL, name VARCHAR(255) NOT NULL, nationality VARCHAR(255) DEFAULT NULL, date_of_birth DATE NOT NULL, date_of_death DATE DEFAULT NULL, PRIMARY KEY(id))');
+        $this->addSql('COMMENT ON COLUMN author.date_of_birth IS \'(DC2Type:date_immutable)\'');
+        $this->addSql('COMMENT ON COLUMN author.date_of_death IS \'(DC2Type:date_immutable)\'');
         $this->addSql('CREATE TABLE author_book (author_id INT NOT NULL, book_id INT NOT NULL, PRIMARY KEY(author_id, book_id))');
         $this->addSql('CREATE INDEX IDX_2F0A2BEEF675F31B ON author_book (author_id)');
         $this->addSql('CREATE INDEX IDX_2F0A2BEE16A2B381 ON author_book (book_id)');
-        $this->addSql('CREATE TABLE book (id INT NOT NULL, editor_id INT NOT NULL, title VARCHAR(255) NOT NULL, isbn VARCHAR(255) NOT NULL, cover VARCHAR(255) NOT NULL, plot TEXT NOT NULL, page_number INT NOT NULL, status VARCHAR(255) NOT NULL, edited_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, PRIMARY KEY(id))');
+        $this->addSql('CREATE TABLE book (id INT NOT NULL, editor_id INT NOT NULL, title VARCHAR(255) NOT NULL, isbn VARCHAR(255) NOT NULL, cover VARCHAR(255) NOT NULL, plot TEXT NOT NULL, page_number INT NOT NULL, status VARCHAR(255) NOT NULL, edited_at DATE NOT NULL, PRIMARY KEY(id))');
         $this->addSql('CREATE INDEX IDX_CBE5A3316995AC4C ON book (editor_id)');
-        $this->addSql('COMMENT ON COLUMN book.edited_at IS \'(DC2Type:datetime_immutable)\'');
+        $this->addSql('COMMENT ON COLUMN book.edited_at IS \'(DC2Type:date_immutable)\'');
         $this->addSql('CREATE TABLE comment (id INT NOT NULL, book_id INT NOT NULL, name VARCHAR(255) NOT NULL, email VARCHAR(255) NOT NULL, content TEXT NOT NULL, created_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, published_at TIMESTAMP(0) WITHOUT TIME ZONE DEFAULT NULL, status VARCHAR(255) NOT NULL, PRIMARY KEY(id))');
         $this->addSql('CREATE INDEX IDX_9474526C16A2B381 ON comment (book_id)');
         $this->addSql('COMMENT ON COLUMN comment.created_at IS \'(DC2Type:datetime_immutable)\'');
