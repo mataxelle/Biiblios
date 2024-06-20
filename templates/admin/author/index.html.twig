@@ -1,20 +1,30 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello AuthorController!{% endblock %}
+{% block title %}Liste des auteurs
+{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+	<section class="container px-4">
+		<div class='w-50 m-auto'>
+			<h1>Liste des auteurs</h1>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
-
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code>C:/wamp64/www/Biblios/src/Controller/Admin/AuthorController.php</code></li>
-        <li>Your template at <code>C:/wamp64/www/Biblios/templates/admin/author/index.html.twig</code></li>
-    </ul>
-</div>
+			<ul class="list-group list-group-flush">
+				{% for author in authors %}
+					<div class="card mb-1">
+						<div class="card-body">
+							<div class="card-title d-flex justify-content-between">
+								<a href="{{ path('app_admin_author_show', {id: author.id})}}" class="stretched-link link-dark">
+									<h4 class="mb-1">{{author.name}}</h4>
+								</a>
+								<small class="text-muted">Idantifiant:
+									{{author.id}}</small>
+							</div>
+						</div>
+					</div>
+				{% else %}
+					<li>Aucun enregistrement en base de nonnées</li>
+				{% endfor %}
+			</ul>
+		</div>
+	</section>
 {% endblock %}
