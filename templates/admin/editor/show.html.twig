@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% set page_title = author is null ? 'Auteur inconnu' : author.name %}
+{% set page_title = editor is null ? 'Éditeur inconnu' : editor.name %}
 
 {% block title %}
 	{{ page_title }}
@@ -8,26 +8,14 @@
 
 {% block body %}
 	<section class="container px-4">
-		{% if author is not null %}
+		{% if editor is not null %}
 			<div class="card mb-1 m-auto">
 				<div class="card-body">
 					<div class="card-title d-flex justify-content-between">
-						<h4 class="mb-1">{{ author.name }}</h4>
+						<h4 class="mb-1">{{ editor.name }}</h4>
 						<small class="text-muted">Idantifiant:
-							{{ author.id }}
+							{{ editor.id }}
 						</small>
-					</div>
-					<div class="d-flex justify-content-between card-text">
-						<ul class="list-group list-group-flush">
-							<li class="list-group-item">Date de naissance :
-								{{ author.dateOfBirth|date('d M Y') }}</li>
-							<li class="list-group-item">Date de décès :
-								{{ author.dateOfDeath is not null ? author.dateOfDeath|date('d M Y') : '-' }}</li>
-						</ul>
-						<p>
-							<small>Nationalité :
-								{{ author.nationality }}</small>
-						</p>
 					</div>
 				</div>
 			</div>
@@ -35,7 +23,7 @@
 			<h3>Livres</h3>
 
 			<ul class="list-group list-group-flush">
-				{% for book in author.books %}
+				{% for book in editor.books %}
 					<div class="card mb-1">
 						<div class="card-body">
 							<div class="card-title d-flex justify-content-between">
@@ -52,9 +40,9 @@
 				{% endfor %}
 			</ul>
 		{% else %}
-			<div>Auteur inconnu</div>
+			<div>Éditeur inconnu</div>
 		{% endif %}
 
-		<a href="{{ path('app_admin_author_index')}}" class="btn btn-primary">Retour</a>
+		<a href="{{ path('app_admin_editor_index')}}" class="btn btn-primary">Retour</a>
 	</section>
 {% endblock %}

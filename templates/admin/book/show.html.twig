@@ -32,7 +32,7 @@
 								<ul class="list-group list-group-flush">
 									{% for author in book.authors %}
 										<li class="list-group-item">
-											<a href="{{ path('app_admin_author_show', {id: author.id}) }}">{{ author.name }}</a>
+											<a href="{{ path('app_admin_author_show', {id: author.id}) }}" class="stretched-link link-dark">{{ author.name }}</a>
 										</li>
 									{% else %}
 										<li class="list-group-item">Pas d'auteur connu</li>
@@ -42,7 +42,7 @@
 							<li class="list-group-item">
 								<h5>Éditeur :
 								</h5>
-								<a href="{{ path('app_admin_editor_show', {id: book.editor.id}) }}">{{ book.editor.name }}</a>
+								<a href="{{ path('app_admin_editor_show', {id: book.editor.id}) }}" class="stretched-link link-dark">{{ book.editor.name }}</a>
 							</li>
 							<li class="list-group-item">
 								<h5>Nombre de pages :
