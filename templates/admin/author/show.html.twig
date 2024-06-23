@@ -1,7 +1,9 @@
 {% extends 'base.html.twig' %}
 
+{% set page_title = author is null ? 'Auteur inconnu' : author.name %}
+
 {% block title %}
-	{{ author.name }}
+	{{ page_title }}
 {% endblock %}
 
 {% block body %}
@@ -48,7 +50,7 @@
 				{% endfor %}
 			</ul>
 		{% else %}
-			<div>Auteur non trouvé</div>
+			<div>Auteur inconnu</div>
 		{% endif %}
 
 		<a href="{{ path('app_admin_author_index')}}" class="btn btn-primary">Retour</a>

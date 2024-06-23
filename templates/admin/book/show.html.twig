@@ -1,13 +1,13 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Livre
+{% set page_title = book is null ? 'Livre inconnu' : book.title %}
+
+{% block title %}
+	{{ page_title }}
 {% endblock %}
 
 {% block body %}
 	<section class="container px-4">
-		<h1>Livre :
-		</h1>
-
 		{% if book is not null %}
 			<div class="card mb-1 m-auto">
 				<div class="card-body">
@@ -60,7 +60,7 @@
 				</div>
 			</div>
 		{% else %}
-			<div>Livre non trouvé</div>
+			<div>Livre inconnu</div>
 		{% endif %}
 		<a href="{{ path('app_admin_book_index') }}" class="btn btn-primary">Retour</a>
 	</section>
