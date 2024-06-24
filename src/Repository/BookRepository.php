@@ -40,4 +40,13 @@ class BookRepository extends ServiceEntityRepository
     //            ->getOneOrNullResult()
     //        ;
     //    }
+
+    public function findByDateOfEdition(array $dates = []): array
+    {
+        $qb = $this->createQueryBuilder('a')
+            ->andWhere('b.editedAt >= :start')
+            ->setParameter('start', new \DateTimeImmutable($dates['start']));
+
+        return $qb->getQuery()->getResult();
+    }
 }
