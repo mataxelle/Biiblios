@@ -44,5 +44,6 @@
 		{% endif %}
 
 		<a href="{{ path('app_admin_editor_index')}}" class="btn btn-primary">Retour</a>
+		<a href="{{ path('app_admin_editor_edit', {id: editor.id}) }}" class="btn btn-secondary">Modifier</a>
 	</section>
 {% endblock %}
