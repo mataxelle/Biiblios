@@ -4,7 +4,10 @@ namespace App\Controller\Admin;
 
 use App\Entity\Editor;
 use App\Form\EditorType;
+use App\Repository\EditorRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Pagerfanta\Doctrine\ORM\QueryAdapter;
+use Pagerfanta\Pagerfanta;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -14,17 +17,24 @@ use Symfony\Component\Routing\Attribute\Route;
 class EditorController extends AbstractController
 {
     #[Route('', name: 'app_admin_editor_index', methods: ['GET'])]
-    public function index(): Response
+    public function index(Request $request, EditorRepository $editorRepository): Response
     {
+        $editors = Pagerfanta::createForCurrentPageWithMaxPerPage(
+            new QueryAdapter($editorRepository->createQueryBuilder('e')),
+            $request->query->get('page', 1),
+            2
+        );
+
         return $this->render('admin/editor/index.html.twig', [
-            'controller_name' => 'EditorController',
+            'editors' => $editors,
         ]);
     }
 
     #[Route('/new', name: 'app_admin_editor_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    #[Route('/{id}/edit', name: 'app_admin_editor_edit', requirements: ['id' => '\d+'], methods: ['GET', 'POST'])]
+    public function new(?Editor $editor, Request $request, EntityManagerInterface $entityManager): Response
     {
-        $editor = new Editor();
+        $editor ??= new Editor();
         $form = $this->createForm(EditorType::class, $editor);
 
         $form->handleRequest($request);
@@ -32,7 +42,7 @@ class EditorController extends AbstractController
             $entityManager->persist($editor);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_admin_editor_index');
+            return $this->redirectToRoute('app_admin_editor_show', ['id' => $editor->getId()]);
         }
 
         return $this->render('admin/editor/new.html.twig', [

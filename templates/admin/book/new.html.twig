@@ -1,12 +1,15 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Ajout d'un livre
+{% set page_title = app.current_route == 'app_admin_book_new' ? 'Ajout' : 'Modification' %}
+
+{% block title %}
+	{{ page_title }}
 {% endblock %}
 
 {% block body %}
 <section class="container px-4">
 	<div class='w-50 m-auto'>
-		<h1>Ajout d'un livre</h1>
+		<h1>{{ page_title }}</h1>
 
 		{{ form_start(form )}}
 		{{ form_row(form.title, {label: 'Titre'}) }}
