@@ -63,6 +63,8 @@
 			<div>Livre inconnu</div>
 		{% endif %}
 		<a href="{{ path('app_admin_book_index') }}" class="btn btn-primary">Retour</a>
-		<a href="{{ path('app_admin_book_edit', {id: book.id}) }}" class="btn btn-secondary">Modifier</a>
+		{% if is_granted('ROLE_ADMIN', 'ROLE_EDITION_DE_LIVRE') %}
+			<a href="{{ path('app_admin_book_edit', {id: book.id}) }}" class="btn btn-secondary">Modifier</a>
+		{% endif %}
 	</section>
 {% endblock %}
