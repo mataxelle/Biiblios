@@ -31,15 +31,17 @@
 							<a class="nav-link" href="{{ path('app_book_index')}}">Catalogue</a>
 						</li>
 						<li class="nav-item">
-							{% if not app.user %}
+							<a class="nav-link" href="{{ path('app_admin_main')}}">Administration</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="{{ path('app_register')}}">Nouvel utilisateur</a>
+						</li>
+						<li class="nav-item">
+							{% if app.user is null %}
 								<a class="nav-link" href="{{ path('app_login')}}">Connexion</a>
 							{% else %}
 								<a class="nav-link" href="{{ path('app_logout')}}">Déconnexion</a>
 							{% endif %}
-
-						</li>
-						<li class="nav-item">
-							<a class="nav-link" href="#contact">Contact</a>
 						</li>
 					</ul>
 				</div>
