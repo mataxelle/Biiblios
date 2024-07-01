@@ -24,9 +24,11 @@
 								<a href="{{ path('app_admin_book_index') }}">
 									<button class="btn btn-outline-primary">Liste</button>
 								</a>
-								<a href="{{ path('app_admin_book_new') }}">
-									<button class="btn btn-outline-primary">Ajout</button>
-								</a>
+								{% if is_granted('ROLE_AJOUT_DE_LIVRE') %}
+									<a href="{{ path('app_admin_book_new') }}">
+										<button class="btn btn-outline-primary">Ajout</button>
+									</a>
+								{% endif %}
 							</div>
 						</li>
 						<li class="nav-item">
@@ -36,9 +38,11 @@
 								<a href="{{ path('app_admin_author_index') }}">
 									<button class="btn btn-outline-primary">Liste</button>
 								</a>
-								<a href="{{ path('app_admin_author_new') }}">
-									<button class="btn btn-outline-primary">Ajout</button>
-								</a>
+								{% if is_granted('ROLE_AJOUT_DE_LIVRE') %}
+									<a href="{{ path('app_admin_author_new') }}">
+										<button class="btn btn-outline-primary">Ajout</button>
+									</a>
+								{% endif %}
 							</div>
 						</li>
 						<li class="nav-item">
@@ -48,9 +52,11 @@
 								<a href="{{ path('app_admin_editor_index') }}">
 									<button class="btn btn-outline-primary">Liste</button>
 								</a>
-								<a href="{{ path('app_admin_editor_new') }}">
-									<button class="btn btn-outline-primary">Ajout</button>
-								</a>
+								{% if is_granted('ROLE_AJOUT_DE_LIVRE') %}
+									<a href="{{ path('app_admin_editor_new') }}">
+										<button class="btn btn-outline-primary">Ajout</button>
+									</a>
+								{% endif %}
 							</div>
 						</li>
 					</ul>
