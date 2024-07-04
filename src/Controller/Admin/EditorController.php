@@ -23,7 +23,7 @@ class EditorController extends AbstractController
         $editors = Pagerfanta::createForCurrentPageWithMaxPerPage(
             new QueryAdapter($editorRepository->createQueryBuilder('e')),
             $request->query->get('page', 1),
-            2
+            9
         );
 
         return $this->render('admin/editor/index.html.twig', [

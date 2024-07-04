@@ -23,7 +23,7 @@ class BookController extends AbstractController
         $books = Pagerfanta::createForCurrentPageWithMaxPerPage(
             new QueryAdapter($bookRepository->createQueryBuilder('b')),
             $request->query->get('page', 1),
-            2
+            8
         );
 
         return $this->render('admin/book/index.html.twig', [
