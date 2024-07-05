@@ -59,6 +59,20 @@
 								{% endif %}
 							</div>
 						</li>
+						<li class="nav-item">
+							<h4>Utilisateurs :
+							</h4>
+							<div class="fs-5">
+								<a href="{{ path('app_admin_user_index') }}">
+									<button class="btn btn-outline-primary">Liste</button>
+								</a>
+								{% if is_granted('ROLE_ADMIN') %}
+									<a href="{{ path('app_register') }}">
+										<button class="btn btn-outline-primary">Ajout</button>
+									</a>
+								{% endif %}
+							</div>
+						</li>
 					</ul>
 				</div>
 			</div>
