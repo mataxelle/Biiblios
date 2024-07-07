@@ -63,4 +63,24 @@ class EditorController extends AbstractController
             'editor' => $editor,
         ]);
     }
+
+    #[IsGranted('ROLE_ADMIN')]
+    #[Route('/{id}/delete', name: 'app_admin_editor_delete', requirements: ['id' => '\d+'], methods: ['DELETE'])]
+    public function delete(?Editor $editor, Request $request, EntityManagerInterface $entityManager): Response
+    {
+        if (!$editor) {
+            throw $this->createNotFoundException('Editeur inconnu');
+        }
+
+        if ($this->isCsrfTokenValid('delete' . $editor->getId(), $request->request->get('_token'))) {
+            $entityManager->remove($editor);
+            $entityManager->flush();
+
+            $this->addFlash('success', 'L\'éditeur a bien été supprimé.');
+        } else {
+            $this->addFlash('error', 'Invalid CSRF token');
+        }
+
+        return $this->redirectToRoute('app_admin_editor_index');
+    }
 }

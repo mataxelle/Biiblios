@@ -72,4 +72,24 @@ class AuthorController extends AbstractController
             'author' => $author,
         ]);
     }
+
+    #[IsGranted('ROLE_ADMIN')]
+    #[Route('/{id}/delete', name: 'app_admin_author_delete', requirements: ['id' => '\d+'], methods: ['DELETE'])]
+    public function delete(?Author $author, Request $request, EntityManagerInterface $entityManager): Response
+    {
+        if (!$author) {
+            throw $this->createNotFoundException('Auteur inconnu');
+        }
+
+        if ($this->isCsrfTokenValid('delete' . $author->getId(), $request->request->get('_token'))) {
+            $entityManager->remove($author);
+            $entityManager->flush();
+
+            $this->addFlash('success', 'L\'auteur a bien été supprimé.');
+        } else {
+            $this->addFlash('error', 'Invalid CSRF token');
+        }
+
+        return $this->redirectToRoute('app_admin_author_index');
+    }
 }

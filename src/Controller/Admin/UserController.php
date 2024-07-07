@@ -65,4 +65,24 @@ class UserController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
+
+    #[IsGranted('ROLE_ADMIN')]
+    #[Route('/{id}/delete', name: 'app_admin_user_delete', requirements: ['id' => '\d+'], methods: ['DELETE'])]
+    public function delete(?User $user, Request $request, EntityManagerInterface $entityManager): Response
+    {
+        if (!$user) {
+            throw $this->createNotFoundException('Utilisateur inconnu');
+        }
+
+        if ($this->isCsrfTokenValid('delete' . $user->getId(), $request->request->get('_token'))) {
+            $entityManager->remove($user);
+            $entityManager->flush();
+
+            $this->addFlash('success', 'L\'utilisateur a bien été supprimé.');
+        } else {
+            $this->addFlash('error', 'Invalid CSRF token');
+        }
+
+        return $this->redirectToRoute('app_admin_user_index');
+    }
 }

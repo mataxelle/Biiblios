@@ -55,9 +55,20 @@
 			<div>Auteur inconnu</div>
 		{% endif %}
 
-		<a href="{{ path('app_admin_author_index') }}" class="btn btn-primary">Retour</a>
-		{% if is_granted('ROLE_ADMIN', 'ROLE_EDITION_DE_LIVRE') %}
-			<a href="{{ path('app_admin_author_edit', {id: author.id}) }}" class="btn btn-secondary">Modifier</a>
-		{% endif %}
+		<div class="d-flex justify-content-between">
+			<a href="{{ path('app_admin_author_index') }}" class="btn btn-primary">Retour</a>
+			<div>
+				{% if is_granted('ROLE_ADMIN', 'ROLE_EDITION_DE_LIVRE') %}
+					<a href="{{ path('app_admin_author_edit', {id: author.id}) }}" class="btn btn-secondary">Modifier</a>
+				{% endif %}
+				{% if is_granted('ROLE_ADMIN') %}
+					<form action="{{ path('app_admin_author_delete', {id: author.id}) }}" method="post" style="display:inline;">
+						<input type="hidden" name="_method" value="DELETE">
+						<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ author.id) }}">
+						<button type="submit" class="btn btn-danger" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet auteur ?');">Supprimer</button>
+					</form>
+				{% endif %}
+			</div>
+		</div>
 	</section>
 {% endblock %}

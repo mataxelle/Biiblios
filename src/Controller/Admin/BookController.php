@@ -63,4 +63,24 @@ class BookController extends AbstractController
             'book' => $book,
         ]);
     }
+
+    #[IsGranted('ROLE_ADMIN')]
+    #[Route('/{id}/delete', name: 'app_admin_book_delete', requirements: ['id' => '\d+'], methods: ['DELETE'])]
+    public function delete(?Book $book, Request $request, EntityManagerInterface $entityManager): Response
+    {
+        if (!$book) {
+            throw $this->createNotFoundException('Livre inconnu');
+        }
+
+        if ($this->isCsrfTokenValid('delete' . $book->getId(), $request->request->get('_token'))) {
+            $entityManager->remove($book);
+            $entityManager->flush();
+
+            $this->addFlash('success', 'Le livre a bien été supprimé.');
+        } else {
+            $this->addFlash('error', 'Invalid CSRF token');
+        }
+
+        return $this->redirectToRoute('app_admin_book_index');
+    }
 }
